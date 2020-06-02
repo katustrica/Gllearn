@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# This file created with KivyCreatorProject
-# <https://github.com/HeaTTheatR/KivyCreatorProgect
-#
-# Copyright (c) 2020 Ivanov Yuri and KivyMD
-#
-# For suggestions and questions:
-# <kivydevelopment@gmail.com>
-#
-# LICENSE: MIT
-
 #:import os os
 #:import SingleIconItem libs.uix.lists.SingleIconItem
 
@@ -69,17 +57,17 @@
             spacing: dp(10)
 
             LabelSection:
-                text:  app.translation._('РњРµРЅСЋ:')
+                text:  app.translation._('Menu')
                 events_callback: lambda x: x
 
             SingleIconItem:
                 icon: 'web'
-                text: app.translation._('РЇР·С‹Рє')
+                text: app.translation._('Lang')
                 events_callback: app.select_locale
 
             SingleIconItem:
                 icon: 'language-python'
-                text: app.translation._('Р›РёС†РµРЅР·РёСЏ')
+                text: app.translation._('License')
                 events_callback: app.show_license
 
             SingleIconItem:

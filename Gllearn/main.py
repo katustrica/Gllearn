@@ -1,18 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-# This file created with KivyCreatorProject
-# <https://github.com/HeaTTheatR/KivyCreatorProgect
-#
-# Copyright (c) 2020 Ivanov Yuri and KivyMD
-#
-# For suggestions and questions:
-# <kivydevelopment@gmail.com>
-#
-# LICENSE: MIT
-
-# Entry point to the application. Runs the main program.py program code.
-# In case of error, displays a window with its text.
-
 import os
 import sys
 import traceback
@@ -30,7 +15,7 @@ try:
         pass
 
     import kivy
-    kivy.require('1.9.2')
+    # kivy.require('1.9.2')
 
     from kivy.config import Config
     Config.set('kivy', 'keyboard_mode', 'system')
@@ -70,7 +55,6 @@ def main():
     except Exception:
         from kivy.app import App
         from kivy.uix.boxlayout import BoxLayout
-
 
         text_error = traceback.format_exc()
         traceback.print_exc(file=open(os.path.join(directory, 'error.log'), 'w'))

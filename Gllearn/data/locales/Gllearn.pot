@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-03 01:35+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: c:\Diplom\Gllearn\Gllearn\libs\uix\kv\basescreen.kv:13
+msgid "ChangeThisScreen"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\libs\uix\kv\license.kv:20
+#: c:\Diplom\Gllearn\Gllearn\gllearn.py:128
+msgid "MIT LICENSE"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\libs\uix\kv\navdrawer.kv:61
+msgid "Menu"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\libs\uix\kv\navdrawer.kv:66
+msgid "Lang"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\libs\uix\kv\navdrawer.kv:71
+msgid "License"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\gllearn.py:103
+msgid ""
+"[size=20][b]Gllearn[/b][/size]\n"
+"\n"
+"[b]Version:[/b] {version}\n"
+"[b]License:[/b] MIT\n"
+"\n"
+"[size=20][b]Developer[/b][/size]\n"
+"\n"
+"[ref=SITE_PROJECT][color={link_color}]Minnakhmetov Musa Albertovich[/color][/"
+"ref]\n"
+"\n"
+"[b]Source code:[/b] [ref=https://github.com/katustrica/Gllearn][color="
+"{link_color}]GitHub[/color][/ref]"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\gllearn.py:122
+#, python-format
+msgid "%s"
+msgstr ""
+
+#: c:\Diplom\Gllearn\Gllearn\gllearn.py:164
+msgid "Press Back to Exit"
+msgstr ""

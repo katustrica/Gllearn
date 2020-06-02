@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "main.py", line 54, in main
+    app.run()
+  File "C:\Diplom\venv\lib\site-packages\kivy\app.py", line 949, in run
+    self._run_prepare()
+  File "C:\Diplom\venv\lib\site-packages\kivy\app.py", line 919, in _run_prepare
+    root = self.build()
+  File "C:\Diplom\Gllearn\Gllearn\gllearn.py", line 62, in build
+    self.load_all_kv_files(os.path.join(self.directory, 'libs', 'uix', 'kv'))
+  File "C:\Diplom\Gllearn\Gllearn\gllearn.py", line 74, in load_all_kv_files
+    Builder.load_string(kv.read())
+  File "C:\Diplom\venv\lib\site-packages\kivy\lang\builder.py", line 371, in load_string
+    parser = Parser(content=string, filename=fn)
+  File "C:\Diplom\venv\lib\site-packages\kivy\lang\parser.py", line 402, in __init__
+    self.parse(content)
+  File "C:\Diplom\venv\lib\site-packages\kivy\lang\parser.py", line 508, in parse
+    self.execute_directives()
+  File "C:\Diplom\venv\lib\site-packages\kivy\lang\parser.py", line 487, in execute_directives
+    raise ParserException(self, ln, 'Unknown directive')
+kivy.lang.parser.ParserException: Parser: File "<inline>", line 1:
+...
+>>    1:#:kivy
+      2:
+      3:<About>:
+...
+Unknown directive

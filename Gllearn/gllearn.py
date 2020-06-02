@@ -42,12 +42,12 @@ class Gllearn(MDApp):
                 os.path.join(self.directory, 'data', 'locales', 'locales.txt')).read()
         )
         self.translation = Translation(
-            self.lang, 'Ttest', os.path.join(self.directory, 'data', 'locales')
+            self.lang, 'Gllearn', os.path.join(self.directory, 'data', 'locales')
         )
 
     def get_application_config(self):
         return super(Gllearn, self).get_application_config(
-                        '{}/%(appname)s.ini'.format(self.directory))
+                     '{}/%(appname)s.ini'.format(self.directory))
 
     def build_config(self, config):
         config.adddefaultsection('General')
@@ -90,7 +90,7 @@ class Gllearn(MDApp):
                 return
             try:
                 self.manager.current = self.list_previous_screens.pop()
-            except:
+            except Exception:
                 self.manager.current = 'base'
             self.screen.ids.action_bar.title = self.title
             self.screen.ids.action_bar.left_action_items = \
@@ -105,7 +105,7 @@ class Gllearn(MDApp):
                 u'[b]License:[/b] MIT\n\n'
                 u'[size=20][b]Developer[/b][/size]\n\n'
                 u'[ref=SITE_PROJECT]'
-                u'[color={link_color}]NAME_AUTHOR[/color][/ref]\n\n'
+                u'[color={link_color}]Minnakhmetov Musa Albertovich[/color][/ref]\n\n'
                 u'[b]Source code:[/b] '
                 u'[ref=https://github.com/katustrica/Gllearn]'
                 u'[color={link_color}]GitHub[/color][/ref]').format(

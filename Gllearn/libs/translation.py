@@ -2,7 +2,6 @@ import gettext
 
 from kivy.lang import Observable
 
-
 class Translation(Observable):
     """Write by tito - https://github.com/tito/kivy-gettext-example."""
 
