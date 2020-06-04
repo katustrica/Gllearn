@@ -1,3 +1,6 @@
+#:import get_hex_from_color kivy.utils.get_hex_from_color
+
+
 <BaseScreen>:
     name: 'base'
 
@@ -5,7 +8,12 @@
         orientation: 'vertical'
 
         Label:
+            id: label_screen
             color: 0, 0, 0, 1
-            font_size: '14sp'
-            text:
-                app.translation._('ChangeThisScreen')
+            font_size: '16sp'
+            text: root.set_my_language()
+            bold: True
+            markup: True
+
+        Widget:
+            size_hint_y: .8

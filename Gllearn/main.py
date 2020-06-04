@@ -23,6 +23,7 @@ try:
 
     from kivymd.theming import ThemeManager
     from bugreporter import BugReporter
+
 except Exception:
     traceback.print_exc(file=open(os.path.join(directory, 'error.log'), 'w'))
     print(traceback.print_exc())

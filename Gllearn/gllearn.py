@@ -76,7 +76,7 @@ class Gllearn(MDApp):
     def events_program(self, instance, keyboard, keycode, text, modifiers):
         if keyboard in (1001, 27):
             if self.nav_drawer.state == 'open':
-                self.nav_drawer.toggle_nav_drawer()
+                self.nav_drawer.set_state()
             self.back_screen(event=keyboard)
         elif keyboard in (282, 319):
             pass
@@ -94,10 +94,10 @@ class Gllearn(MDApp):
                 self.manager.current = 'base'
             self.screen.ids.action_bar.title = self.title
             self.screen.ids.action_bar.left_action_items = \
-                [['menu', lambda x: self.nav_drawer.toggle_nav_drawer()]]
+                [['menu', lambda x: self.nav_drawer.set_state()]]
 
     def show_about(self, *args):
-        self.nav_drawer.toggle_nav_drawer()
+        self.nav_drawer.set_state()
         self.screen.ids.about.ids.label.text = \
             self.translation._(
                 u'[size=20][b]Gllearn[/b][/size]\n\n'
@@ -117,7 +117,7 @@ class Gllearn(MDApp):
             [['chevron-left', lambda x: self.back_screen(27)]]
 
     def show_license(self, *args):
-        self.nav_drawer.toggle_nav_drawer()
+        self.nav_drawer.set_state()
         self.screen.ids.license.ids.text_license.text = \
             self.translation._('%s') % open(
                 os.path.join(self.directory, 'LICENSE'), encoding='utf-8').read()

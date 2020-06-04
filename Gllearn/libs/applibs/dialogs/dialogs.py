@@ -15,7 +15,7 @@ Builder.load_string(
     """
 # Окно для ввода текста.
 
-[InputText@ModalView]:
+<InputText@ModalView>:
     size_hint: .8, .4
     background_color: 0, 0, 0, .2
 
@@ -67,7 +67,7 @@ Builder.load_string(
 
 # Окно прогресса.
 
-[Progress@ModalView]:
+<Progress@ModalView>:
     size_hint: .8, .4
     background_color: 0, 0, 0, .2
     auto_dismiss: False
