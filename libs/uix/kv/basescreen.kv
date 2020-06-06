@@ -1,0 +1,23 @@
+#:import get_hex_from_color kivy.utils.get_hex_from_color
+
+
+<BaseScreen>:
+    name: 'base'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            id: label_screen
+            color: 0, 0, 0, 1
+            font_size: '16sp'
+            text: root.set_my_language()
+            bold: True
+            markup: True
+
+        MDFloatingActionButtonSpeedDial:
+            data: root.data
+            rotation_root_button: True
+            hint_animation: True
+            bg_hint_color: app.theme_cls.primary_light
+            callback: app.show_snake
