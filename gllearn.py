@@ -7,6 +7,7 @@ from kivy.core.window import Window
 from kivy.config import ConfigParser
 from kivy.clock import Clock
 from kivy.utils import get_hex_from_color
+from kivy.utils import get_random_color
 from kivy.properties import ObjectProperty, StringProperty
 
 from libs.translation import Translation
@@ -24,7 +25,15 @@ class Gllearn(MDApp):
     icon = 'icon.png'
     nav_drawer = ObjectProperty()
     lang = StringProperty('en')
+    words_with_color = {
+        'What': get_random_color(alpha=1.0),
+        'are': get_random_color(alpha=1.0),
+        'you': get_random_color(alpha=1.0),
+        'doing?': get_random_color(alpha=1.0)
+    }
     __version__ = '0.01'
+
+
 
 
     def __init__(self, **kvargs):
@@ -118,8 +127,13 @@ class Gllearn(MDApp):
         self.screen.ids.action_bar.left_action_items = \
             [['chevron-left', lambda x: self.back_screen(27)]]
 
-    def show_snake(self, *args):
+    def show_words(self, *args):
         self.screen.ids.action_bar.title = 'Snake'
+        self.screen.ids.action_bar.title = 'Snake'
+        self.manager.current = 'words'
+        Clock.schedule_once(self.show_snake, 5)
+
+    def show_snake(self, *args):
         self.manager.current = 'snake'
         self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen(27)]]
 

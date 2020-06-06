@@ -1,6 +1,19 @@
 [color=#000]This program is written using the Kivy framework.
-[color=2196f3]Copyright В© 2010-2018 Kivy Team and © Musa Minnakhmetov 2020
+[color=2196f3]Copyright © Musa Minnakhmetov 2020
 
+
+Other libraries used in the project:
+[color=2196f3]Copyright[color=#000] (c) 2015 Andrés Rodríguez and KivyMD contributors - KivyMD library up to version 0.1.2
+[color=2196f3]Copyright[color=#000] (c) 2020 Andrés Rodríguez, Ivanov Yuri, Artem S. Bulgakov and KivyMD contributors - KivyMD library version 0.1.3 and higher
+[color=2196f3]Copyright[color=#000] (c) 2010-2020 Kivy Team and other contributors
+[color=2196f3]Copyright[color=#000] (c) 2013 Brian Knapp - Androidoast library
+[color=2196f3]Copyright[color=#000] (c) 2014 LogicalDash - stiffscroll library
+[color=2196f3]Copyright[color=#000] (c) 2015 Davide Depau - circularTimePicker, circleLayout libraries
+[color=2196f3]Copyright[color=#000] (c) 2015 Kivy Garden - tabs module
+[color=2196f3]Copyright[color=#000] (c) 2020 Nattōsai Mitō - asynckivy module
+[color=2196f3]Copyright[color=#000] (c) 2020 tshirtman - magic_behavior module
+[color=2196f3]Copyright[color=#000] (c) 2020 shashi278 - taptargetview module
+[color=2196f3]Copyright[color=#000] (c) 2020 Benedikt Zwölfer - fitimage module
 COPYRIGHT
 
 [color=#000]Permission is hereby granted, free of charge, to any person copy of this software and associated documentation files (the [color=2196f3]"Software"[color=#000]),

@@ -8,11 +8,27 @@ from kivy.vector import Vector
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from random import randint
 
-WINDOW_HEIGHT, WINDOW_WIDTH = Window.size
 
-# note that 2 pixels are always subtracted from PLAYER_SIZE for better clarity
+def update_window_size():
+    global WINDOW_HEIGHT, WINDOW_WIDTH
+    WINDOW_WIDTH, WINDOW_HEIGHT = Window.size
+    WINDOW_HEIGHT -= 60
+
 PLAYER_SIZE = 40
 GAME_SPEED = .15
+
+
+class Words():
+    def __init__(self, words):
+        colors = [white, red, green, blue, yellow]
+        random.shuffle(colors)
+        colors = colors[:len(words)]
+        words_combination = [[word, color] for word, color in zip(words, colors[:])]
+        random.shuffle(words_combination)
+        self.not_shuffled_words = words
+        self.diction = [[word, color] for word, color in zip(words, colors)]
+        self.words_combination = words_combination
+        self.colors = colors
 
 
 class Fruit(Widget):
@@ -31,6 +47,7 @@ class SnakeHead(Widget):
     orientation = (PLAYER_SIZE, 0)
 
     def reset_pos(self):
+        update_window_size()
         # positions the player roughly in the middle of the gameboard
         self.pos = \
             [int(WINDOW_WIDTH / 2 - (WINDOW_WIDTH / 2 % PLAYER_SIZE)),
@@ -49,6 +66,7 @@ class smartGrid:
         Usage: self.occupied[coords] = True
                if self.occupied[coords] is True
         """
+        update_window_size()
         self.grid = [[False for i in range(WINDOW_HEIGHT)]
                      for j in range(WINDOW_WIDTH)]
 
@@ -69,8 +87,8 @@ class SnakeGame(Widget):
 
     def __init__(self, **kwargs):
         super(SnakeGame, self).__init__(**kwargs)
-        # Window.size = (WINDOW_WIDTH, WINDOW_HEIGHT)
-        import pdb; pdb.set_trace()
+        update_window_size()
+        Window.size = (WINDOW_WIDTH, WINDOW_HEIGHT)
         Window.bind(on_key_down=self.key_action)
 
         if PLAYER_SIZE < 3:
@@ -79,18 +97,18 @@ class SnakeGame(Widget):
         if WINDOW_HEIGHT < 3 * PLAYER_SIZE or WINDOW_WIDTH < 3 * PLAYER_SIZE:
             raise ValueError(
                 "Window size must be at least 3 times larger than player size")
-
-        self.timer = Clock.schedule_interval(self.refresh, GAME_SPEED)
         self.tail = []
-        self.restart_game()
+        self.timer = None
 
     def restart_game(self):
         """Resets the game to its initial state
         """
+        update_window_size()
         self.occupied = smartGrid()
         logging.info('Restarted game.')
         # resets the timer
-        self.timer.cancel()
+        if self.timer:
+            self.timer.cancel()
         self.timer = Clock.schedule_interval(self.refresh, GAME_SPEED)
         self.head.reset_pos()
         self.score = 0
@@ -127,7 +145,7 @@ class SnakeGame(Widget):
 
         'dt' must be used to allow kivy.Clock objects to use this function
         """
-
+        update_window_size()
         # outside the boundaries of the game
         if not (0 <= self.head.pos[0] < WINDOW_WIDTH) or \
            not (0 <= self.head.pos[1] < WINDOW_HEIGHT):
@@ -163,11 +181,9 @@ class SnakeGame(Widget):
             self.spawn_fruit()
 
     def spawn_fruit(self):
-
         roll = self.fruit.pos
         found = False
         while not found:
-
             # roll new random positions until one is free
             roll = [PLAYER_SIZE *
                     randint(0, int(WINDOW_WIDTH / PLAYER_SIZE) - 1),
@@ -215,10 +231,14 @@ class SnakeGame(Widget):
 
 
 class Snake(Screen):
-    app = App.get_running_app()
+    game = SnakeGame()
 
     def on_enter(self):
-        game = SnakeGame()
-        global WINDOW_HEIGHT, WINDOW_WIDTH
-        WINDOW_HEIGHT, WINDOW_WIDTH = Window.size
-        self.add_widget(game)
+        update_window_size()
+        self.game.restart_game()
+        self.add_widget(self.game)
+
+    def on_leave(self):
+        if self.game.timer:
+            self.game.timer.cancel()
+        self.clear_widgets()

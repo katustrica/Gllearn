@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File ".\main.py", line 30, in main
+    app.run()
+  File "C:\Diplom\kivy\lib\site-packages\kivy\app.py", line 950, in run
+    runTouchApp()
+  File "C:\Diplom\kivy\lib\site-packages\kivy\base.py", line 560, in runTouchApp
+    EventLoop.mainloop()
+  File "C:\Diplom\kivy\lib\site-packages\kivy\base.py", line 334, in mainloop
+    self.idle()
+  File "C:\Diplom\kivy\lib\site-packages\kivy\base.py", line 375, in idle
+    Clock.tick()
+  File "C:\Diplom\kivy\lib\site-packages\kivy\clock.py", line 648, in tick
+    self.post_idle(ts, self.idle())
+  File "C:\Diplom\kivy\lib\site-packages\kivy\clock.py", line 691, in post_idle
+    self._process_events()
+  File "kivy\_clock.pyx", line 384, in kivy._clock.CyClockBase._process_events
+  File "kivy\_clock.pyx", line 414, in kivy._clock.CyClockBase._process_events
+  File "kivy\_clock.pyx", line 412, in kivy._clock.CyClockBase._process_events
+  File "kivy\_clock.pyx", line 167, in kivy._clock.ClockEvent.tick
+  File "C:\Diplom\kivy\lib\site-packages\kivy\animation.py", line 352, in _update
+    self.stop(widget)
+  File "C:\Diplom\kivy\lib\site-packages\kivy\animation.py", line 217, in stop
+    self.dispatch('on_complete', widget)
+  File "kivy\_event.pyx", line 705, in kivy._event.EventDispatcher.dispatch
+  File "kivy\_event.pyx", line 1248, in kivy._event.EventObservers.dispatch
+  File "kivy\_event.pyx", line 1172, in kivy._event.EventObservers._dispatch
+  File "C:\Diplom\kivy\lib\site-packages\kivy\uix\screenmanager.py", line 419, in _on_complete
+    self.screen_in.dispatch('on_enter')
+  File "kivy\_event.pyx", line 709, in kivy._event.EventDispatcher.dispatch
+  File "C:\Diplom\Gllearn\libs\uix\baseclass\words.py", line 10, in on_enter
+    for word, color in app.words_with_color.items():
+NameError: name 'app' is not defined

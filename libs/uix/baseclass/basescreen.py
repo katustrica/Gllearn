@@ -7,19 +7,14 @@ from kivymd.uix.button import MDFloatingActionButtonSpeedDial
 class BaseScreen(Screen):
     app = App.get_running_app()
     data = {
-        'language-python': 'Python',
-        'language-php': 'PHP',
-        'language-cpp': 'C++',
+        'language-python': 'Змейка',
+        'web': 'Перевод слов',
     }
 
     def set_my_language(self, instance_button=None):
-        if instance_button:
-            text = instance_button.icon.split('-')[1]
-        else:
-            text = 'Python'
-        text = self.app.translation._(
-            'Я программирую на [color=%s]%s[/color]') % (
-                get_hex_from_color(self.app.theme_cls.primary_color),
-                text.capitalize())
+
+        text = self.app.translation._('Привет! Во что будешь [color={}]играть[/color]? ').format(
+            get_hex_from_color(self.app.theme_cls.primary_color)
+        )
         self.ids.label_screen.text = text
         return text
