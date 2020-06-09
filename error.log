@@ -27,6 +27,6 @@ Traceback (most recent call last):
   File "C:\Diplom\kivy\lib\site-packages\kivy\uix\screenmanager.py", line 419, in _on_complete
     self.screen_in.dispatch('on_enter')
   File "kivy\_event.pyx", line 709, in kivy._event.EventDispatcher.dispatch
-  File "C:\Diplom\Gllearn\libs\uix\baseclass\words.py", line 10, in on_enter
-    for word, color in app.words_with_color.items():
-NameError: name 'app' is not defined
+  File "C:\Diplom\Gllearn\libs\uix\baseclass\words.py", line 17, in on_enter
+    shuffled_words = shuffle_dict(self.app.snake_words_with_color[self.app.current_round_snake])
+IndexError: list index out of range

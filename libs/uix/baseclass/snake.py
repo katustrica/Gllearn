@@ -3,10 +3,13 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
+from kivy.graphics import Rectangle, Color, Ellipse
 from kivy.uix.screenmanager import Screen
 from kivy.vector import Vector
+from kivy.uix.label import Label
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from random import randint
+from collections import deque
 
 
 def update_window_size():
@@ -18,23 +21,24 @@ PLAYER_SIZE = 40
 GAME_SPEED = .15
 
 
-class Words():
-    def __init__(self, words):
-        colors = [white, red, green, blue, yellow]
-        random.shuffle(colors)
-        colors = colors[:len(words)]
-        words_combination = [[word, color] for word, color in zip(words, colors[:])]
-        random.shuffle(words_combination)
-        self.not_shuffled_words = words
-        self.diction = [[word, color] for word, color in zip(words, colors)]
-        self.words_combination = words_combination
-        self.colors = colors
-
-
 class Fruit(Widget):
-    def move(self, new_pos):
-        self.pos = new_pos
+    def __init__(self, color, word, **kwargs):
+        super(Fruit, self).__init__(**kwargs)
 
+        pos = [PLAYER_SIZE * randint(0, int(WINDOW_WIDTH / PLAYER_SIZE) - 2),
+               PLAYER_SIZE * randint(0, int(WINDOW_HEIGHT / PLAYER_SIZE) - 2)]
+        size = (PLAYER_SIZE, PLAYER_SIZE)
+        self.label = Label(text=word,
+                           font_size='10sp',
+                           color=(1, 1, 1, 1),
+                           pos=[pos[0]-30, pos[1]-30],
+                           halign='center',
+                           valign='center',
+                           text_size=[size[0], size[1]])
+        with self.label.canvas.before:
+            Color(*color)
+            self.label.rect = Ellipse(pos=pos, size=size)
+        self.add_widget(self.label)
 
 class SnakeTail(Widget):
 
@@ -78,10 +82,11 @@ class smartGrid:
 
 
 class SnakeGame(Widget):
-
+    app = App.get_running_app()
     head = ObjectProperty(None)
-    fruit = ObjectProperty(None)
-    score = NumericProperty(0)
+    fruits_pos = deque()
+    fruits = deque()
+    score = StringProperty("")
     player_size = NumericProperty(PLAYER_SIZE)
     game_over = StringProperty("")
 
@@ -111,7 +116,7 @@ class SnakeGame(Widget):
             self.timer.cancel()
         self.timer = Clock.schedule_interval(self.refresh, GAME_SPEED)
         self.head.reset_pos()
-        self.score = 0
+        self.score = ''
 
         for block in self.tail:
             self.remove_widget(block)
@@ -126,6 +131,7 @@ class SnakeGame(Widget):
                 size=(self.head.size)
             )
         )
+        # self.tail[0].canvas.children[0].rgb = [1, 1, 1]
         self.add_widget(self.tail[-1])
         self.occupied[self.tail[-1].pos] = True
 
@@ -167,36 +173,30 @@ class SnakeGame(Widget):
         self.tail[0].move(new_pos=self.head.pos)
         self.occupied[self.tail[0].pos] = True
 
-        # move the head
         self.head.move()
-
-        # check if we found the fruit, if so, add another tail
-        if self.head.pos == self.fruit.pos:
-            self.score += 1
+        if not self.fruits_pos:
+            self.end_round()
+            return
+        if (self.head.pos[0] == int(self.fruits_pos[0][0])) and (self.head.pos[1] == int(self.fruits_pos[0][1])):
+            self.fruits_pos.popleft()
+            fruit = self.fruits.popleft()
+            self.score += str(fruit.label.text) + ' '
+            self.remove_widget(fruit)
             self.tail.append(
                 SnakeTail(
                     pos=self.head.pos,
                     size=self.head.size))
             self.add_widget(self.tail[-1])
-            self.spawn_fruit()
 
     def spawn_fruit(self):
-        roll = self.fruit.pos
-        found = False
-        while not found:
-            # roll new random positions until one is free
-            roll = [PLAYER_SIZE *
-                    randint(0, int(WINDOW_WIDTH / PLAYER_SIZE) - 1),
-                    PLAYER_SIZE *
-                    randint(0, int(WINDOW_HEIGHT / PLAYER_SIZE) - 1)]
+        for fruit in self.fruits:
+            self.remove_widget(fruit)
+        words_with_color = self.app.snake_words_with_color[self.app.current_round_snake]
+        self.fruits = deque([Fruit(color, word) for word, color in words_with_color.items()])
+        self.fruits_pos = deque([fruit.label.rect.pos for fruit in self.fruits])
 
-            if self.occupied[roll] is True or \
-                    roll == self.head.pos:
-                continue
-
-            found = True
-
-        self.fruit.move(roll)
+        for fruit in self.fruits:
+            self.add_widget(fruit)
 
     def key_action(self, *args):
         """This handles user input
@@ -228,6 +228,13 @@ class SnakeGame(Widget):
                 self.head.orientation = (0, PLAYER_SIZE)
             else:
                 self.head.orientation = (0, -PLAYER_SIZE)
+
+    def end_round(self):
+        if self.timer:
+            self.timer.cancel()
+        self.clear_widgets()
+        self.app.current_round_snake += 1
+        self.app.next_snake_words()
 
 
 class Snake(Screen):

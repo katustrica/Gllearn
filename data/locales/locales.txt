@@ -1,1 +1,1 @@
-{'ru': 'Russian', 'en': 'English'}
+{'ru': 'Russian', 'en': 'English', 'tat': 'Tatar'}

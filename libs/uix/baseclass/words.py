@@ -14,7 +14,8 @@ def shuffle_dict(d):
 class Words(Screen):
     app = App.get_running_app()
     def on_enter(self):
-        for word, color in shuffle_dict(self.app.words_with_color).items():
+        shuffled_words = shuffle_dict(self.app.snake_words_with_color[self.app.current_round_snake])
+        for word, color in shuffled_words.items():
             self.ids.box_words.add_widget(
                 MDLabel(
                     text=word,
@@ -23,3 +24,5 @@ class Words(Screen):
                     text_color= color
                 )
             )
+    def on_leave(self):
+        self.ids.box_words.clear_widgets()

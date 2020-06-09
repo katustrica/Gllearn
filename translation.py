@@ -3,7 +3,6 @@ import gettext
 from kivy.lang import Observable
 
 class Translation(Observable):
-    """Write by tito - https://github.com/tito/kivy-gettext-example."""
 
     observers = []
     lang = None
@@ -38,7 +37,6 @@ class Translation(Observable):
             return super(Translation, self).funbind(name, func, *args, **kwargs)
 
     def switch_lang(self, lang):
-        # get the right locales directory, and instanciate a gettext
         locales = gettext.translation(self.domian, self.resource_dir, languages=[lang])
         try:
             self.ugettext = locales.ugettext

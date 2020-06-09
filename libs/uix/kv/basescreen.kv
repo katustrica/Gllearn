@@ -11,7 +11,7 @@
             id: label_screen
             color: 0, 0, 0, 1
             font_size: '16sp'
-            text: root.set_my_language()
+            text: root.hello()
             bold: True
             markup: True
 
@@ -20,4 +20,4 @@
             rotation_root_button: True
             hint_animation: True
             bg_hint_color: app.theme_cls.primary_light
-            callback: app.show_words
+            callback: root.select_game

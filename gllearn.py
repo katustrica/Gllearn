@@ -22,16 +22,11 @@ from libs.applibs.dialogs import card
 
 class Gllearn(MDApp):
     title = 'Gllearn'
-    icon = 'icon.png'
+    icon = '.data/images/icon.png'
     nav_drawer = ObjectProperty()
-    lang = StringProperty('en')
-    words_with_color = {
-        'What': get_random_color(alpha=1.0),
-        'are': get_random_color(alpha=1.0),
-        'you': get_random_color(alpha=1.0),
-        'doing?': get_random_color(alpha=1.0)
-    }
-    __version__ = '0.01'
+    lang = StringProperty('ru')
+    lang_games = StringProperty('en')
+    __version__ = '0.6'
 
 
 
@@ -46,15 +41,27 @@ class Gllearn(MDApp):
         self.config = ConfigParser()
         self.manager = None
         self.window_language = None
+        self.window_game_language = None
         self.exit_interval = False
         self.dict_language = literal_eval(
             open(
                 os.path.join(self.directory, 'data', 'locales', 'locales.txt')).read()
         )
+
         self.translation = Translation(
             self.lang, 'Gllearn', os.path.join(self.directory, 'data', 'locales')
         )
+        self.translation_game = Translation(
+            self.lang_games, 'Games', os.path.join(self.directory, 'data', 'locales')
+        )
 
+        # snake configs
+        self.snake_words_with_color = [
+            {word: get_random_color(alpha=1.0) for word in words}
+            for words in [s.split(' ') for s in self.translation_game._('snake_rounds').split(' | ')]
+        ]
+        self.current_round_snake = 0
+        # other games
     def get_application_config(self):
         return super(Gllearn, self).get_application_config(
                      '{}/%(appname)s.ini'.format(self.directory))
@@ -66,6 +73,7 @@ class Gllearn(MDApp):
     def set_value_from_config(self):
         self.config.read(os.path.join(self.directory, 'gllearn.ini'))
         self.lang = self.config.get('General', 'language')
+        self.lang_games = self.config.get('Games', 'language')
 
     def build(self):
         self.theme_cls.primary_palette = "Indigo"
@@ -101,9 +109,27 @@ class Gllearn(MDApp):
                 return
             try:
                 self.manager.current = self.list_previous_screens.pop()
+                self.manager.transition.direction = 'right'
             except Exception:
                 self.manager.current = 'base'
+                self.manager.transition.direction = 'right'
             self.screen.ids.action_bar.title = self.title
+            self.screen.ids.action_bar.left_action_items = \
+                [['menu', lambda x: self.nav_drawer.set_state()]]
+
+    def back_screen_on_game(self, event=None):
+        if event in (1001, 27):
+            if self.manager.current == 'base':
+                self.dialog_exit()
+                return
+            try:
+                self.manager.current = self.list_previous_screens.pop()
+                self.manager.transition.direction = 'down'
+            except Exception:
+                self.manager.current = 'base'
+                self.manager.transition.direction = 'down'
+            self.screen.ids.action_bar.title = self.title
+            Clock.unschedule(self.show_snake)
             self.screen.ids.action_bar.left_action_items = \
                 [['menu', lambda x: self.nav_drawer.set_state()]]
 
@@ -124,18 +150,31 @@ class Gllearn(MDApp):
                 link_color=get_hex_from_color(self.theme_cls.primary_color)
             )
         self.manager.current = 'about'
+        self.manager.transition.direction = 'left'
         self.screen.ids.action_bar.left_action_items = \
             [['chevron-left', lambda x: self.back_screen(27)]]
 
     def show_words(self, *args):
-        self.screen.ids.action_bar.title = 'Snake'
-        self.screen.ids.action_bar.title = 'Snake'
+        self.screen.ids.action_bar.title = f'Змейка полиглот {self.current_round_snake+1} lvl'
         self.manager.current = 'words'
-        Clock.schedule_once(self.show_snake, 5)
+        self.manager.transition.direction = 'up'
+        self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen_on_game(27)]]
+        Clock.schedule_once(self.show_snake, 1)
+
+    def next_snake_words(self, *args):
+        Clock.unschedule(self.show_snake)
+        self.screen.ids.action_bar.title = f'Змейка полиглот {self.current_round_snake+1} lvl'
+        self.manager.current = 'words'
+        self.manager.transition.direction = 'down'
+        self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen_on_game(27)]]
+        Clock.schedule_once(self.show_snake, 1)
 
     def show_snake(self, *args):
         self.manager.current = 'snake'
-        self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen(27)]]
+        self.manager.transition.direction = 'up'
+        self.screen.ids.action_bar.left_action_items = [
+            ['chevron-left', lambda x: self.back_screen_on_game(27)]
+        ]
 
     def show_license(self, *args):
         self.nav_drawer.set_state()
@@ -143,6 +182,7 @@ class Gllearn(MDApp):
             self.translation._('%s') % open(
                 os.path.join(self.directory, 'LICENSE'), encoding='utf-8').read()
         self.manager.current = 'license'
+        self.manager.transition.direction = 'left'
         self.screen.ids.action_bar.left_action_items = \
             [['chevron-left', lambda x: self.back_screen(27)]]
         self.screen.ids.action_bar.title = \
@@ -171,6 +211,33 @@ class Gllearn(MDApp):
             )
         self.window_language.open()
 
+    def select_game_locale(self, *args):
+        def select_game_locale(name_locale):
+            for locale in self.dict_language.keys():
+                if name_locale == self.dict_language[locale]:
+                    self.lang_games = locale
+                    self.config.set('Games', 'language', self.lang_games)
+                    self.config.write()
+                    self.translation_game.switch_lang(name_locale)
+                    self.snake_words_with_color = [
+                        {word: get_random_color(alpha=1.0) for word in words}
+                        for words in [s.split(' ') for s in self.translation_game._('snake_rounds').split(' | ')]
+                    ]
+
+        dict_info_locales = {}
+        for locale in self.dict_language.keys():
+            dict_info_locales[self.dict_language[locale]] = \
+                ['locale', locale == self.lang_games]
+        if not self.window_game_language:
+            self.window_game_language = card(
+                Lists(
+                    dict_items=dict_info_locales,
+                    events_callback=select_game_locale, flag='one_select_check'
+                ),
+                size=(.85, .55)
+            )
+        self.window_game_language.open()
+
     def dialog_exit(self):
         def check_interval_press(interval):
             self.exit_interval += interval
@@ -186,3 +253,4 @@ class Gllearn(MDApp):
 
     def on_lang(self, instance, lang):
         self.translation.switch_lang(lang)
+        self.translation_game.switch_lang(lang)
