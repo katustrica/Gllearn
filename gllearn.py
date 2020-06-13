@@ -55,20 +55,11 @@ class Gllearn(MDApp):
             self.lang_games, 'Games', os.path.join(self.directory, 'data', 'locales')
         )
 
-        # snake configs
         self.snake_words_with_color = [
             {word: get_random_color(alpha=1.0) for word in words}
             for words in [s.split(' ') for s in self.translation_game._('snake_rounds').split(' | ')]
         ]
         self.current_round_snake = 0
-        # other games
-    def get_application_config(self):
-        return super(Gllearn, self).get_application_config(
-                     '{}/%(appname)s.ini'.format(self.directory))
-
-    def build_config(self, config):
-        config.adddefaultsection('General')
-        config.setdefault('General', 'language', 'en')
 
     def set_value_from_config(self):
         self.config.read(os.path.join(self.directory, 'gllearn.ini'))
@@ -82,7 +73,6 @@ class Gllearn(MDApp):
         self.screen = StartScreen()
         self.manager = self.screen.ids.manager
         self.nav_drawer = self.screen.ids.nav_drawer
-
         return self.screen
 
     def load_all_kv_files(self, directory_kv_files):
@@ -99,7 +89,6 @@ class Gllearn(MDApp):
             self.back_screen(event=keyboard)
         elif keyboard in (282, 319):
             pass
-
         return True
 
     def back_screen(self, event=None):

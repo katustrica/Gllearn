@@ -1,0 +1,3 @@
+title=Gllearn
+author=MusaAM
+orientation=landscape

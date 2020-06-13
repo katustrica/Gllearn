@@ -117,7 +117,6 @@ class SnakeGame(Widget):
         self.timer = Clock.schedule_interval(self.refresh, GAME_SPEED)
         self.head.reset_pos()
         self.score = ''
-
         for block in self.tail:
             self.remove_widget(block)
 

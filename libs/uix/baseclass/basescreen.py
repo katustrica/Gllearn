@@ -26,3 +26,5 @@ class BaseScreen(Screen):
             pass
         elif instance.icon == 'web':
             self.app.select_game_locale(self)
+
+
