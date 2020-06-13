@@ -148,7 +148,7 @@ class Gllearn(MDApp):
         self.manager.current = 'words'
         self.manager.transition.direction = 'up'
         self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen_on_game(27)]]
-        Clock.schedule_once(self.show_snake, 1)
+        Clock.schedule_once(self.show_snake, 8)
 
     def next_snake_words(self, *args):
         Clock.unschedule(self.show_snake)
@@ -156,10 +156,18 @@ class Gllearn(MDApp):
         self.manager.current = 'words'
         self.manager.transition.direction = 'down'
         self.screen.ids.action_bar.left_action_items = [['chevron-left', lambda x: self.back_screen_on_game(27)]]
-        Clock.schedule_once(self.show_snake, 1)
+        Clock.schedule_once(self.show_snake, 8)
 
     def show_snake(self, *args):
         self.manager.current = 'snake'
+        self.manager.transition.direction = 'up'
+        self.screen.ids.action_bar.left_action_items = [
+            ['chevron-left', lambda x: self.back_screen_on_game(27)]
+        ]
+
+    def show_translator(self, *args):
+        self.manager.current = 'translator'
+        self.screen.ids.action_bar.title = f'Переводчик'
         self.manager.transition.direction = 'up'
         self.screen.ids.action_bar.left_action_items = [
             ['chevron-left', lambda x: self.back_screen_on_game(27)]

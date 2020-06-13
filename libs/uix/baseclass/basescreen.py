@@ -23,8 +23,6 @@ class BaseScreen(Screen):
         if instance.icon == 'language-python':
             self.app.show_words(self)
         elif instance.icon == 'translate':
-            pass
+            self.app.show_translator(self)
         elif instance.icon == 'web':
             self.app.select_game_locale(self)
-
-

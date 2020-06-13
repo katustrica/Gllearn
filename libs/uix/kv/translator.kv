@@ -1,0 +1,99 @@
+<Enter>:
+    lang_1:lang_1
+    lang_2:lang_2
+    canvas.before:
+        Color:
+            rgba: 0.709, 0.709, 0.709, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+
+    GridLayout:
+        FloatLayout:
+            size:root.size[0]-50, root.size[1]-35
+            GridLayout:
+                spacing:2
+                cols:1
+                TextInput:
+                    id:lang_1
+                    text:''
+                    background_color:0.950, 0.950, 0.950, 1
+                TextInput:
+                    id:lang_2
+                    text:''
+                    background_color:0.950, 0.950, 0.950, 1
+        Button:
+            on_press:
+                self.background_color = 0,0,0,0.5
+                root.translater()
+            on_release: self.background_color = 0,0,255,0.6
+            background_color: 0,0,255,0.6
+            pos: root.size[0]-50, 0
+            height:root.size[1]
+            width:50
+
+        MDRaisedButton:
+            id:fstL
+            text:"С:"
+            pos: 0, root.size[1]-35
+            size:root.size[0]/5, 35
+            on_release:
+                root.btn()
+
+        MDRaisedButton:
+            id:scndL
+            text:"На:"
+            pos: root.size[0]/5 + 10, root.size[1]-35
+            size:root.size[0]/5, 35
+            on_release:
+                root.btn2()
+
+<P>:
+    GridLayout:
+        pos_hint:{'center_x': .5, 'center_y': .5}
+        cols:2
+        raws:2
+        Button:
+            text:"English"
+            on_release:root.En()
+
+        Button:
+            text:"Russian"
+            on_release:root.Ru()
+
+        Button:
+            text:"French"
+            on_release:root.Fr()
+
+        Button:
+            text:"Tatar"
+            on_release:root.Tt()
+
+
+
+
+<P2>:
+    GridLayout:
+        pos_hint:{'center_x': .5, 'center_y': .5}
+        cols:2
+        raws:2
+        Button:
+            text:"English"
+            on_release:root.En2()
+        Button:
+            text:"Russian"
+            on_release:root.Ru2()
+
+        Button:
+            text:"French"
+            on_release:root.Fr2()
+
+        Button:
+            text:"Tatar"
+            on_release:root.Tt2()
+
+<Translator>:
+    name: 'translator'
+    Enter:
